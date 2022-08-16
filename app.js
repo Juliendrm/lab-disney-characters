@@ -32,10 +32,15 @@ app.get("/characters/:_id", (req, res) => {
 });
 
 app.post("/characters", (req, res) => {
-  let [{ name, films }] = req.body; // take what they give
-  _id = jsonDisney.length + 1;
+  let { name, films } = req.body; // take what they give
+  let _id = jsonDisney.at(-1)._id;
+  _id++;
   const characterToCreate = { name, films, _id };
   jsonDisney.push(characterToCreate); // push in database
+  return res.json({
+    message: `new character added : `,
+    characterToCreate,
+  });
 });
 
 app.listen(port, () => {
